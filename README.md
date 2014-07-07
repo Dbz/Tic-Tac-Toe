@@ -2,7 +2,6 @@ Tic-Tac-Toe
 ===========
 
 Two Player Tic Tac Toe was created to help me learn Ruby
----
 
 The Ruby File is played in terminal
 
