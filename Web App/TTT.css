@@ -7,8 +7,8 @@ td {
 	font-size: 60px;
 	padding: 15px;
 	background-color: #FFD1FF;
-	height: 75px;
-	width: 75px;
+	height: 95px;
+	width: 95px;
 }
 caption {
 	cursor:default;
@@ -27,4 +27,7 @@ tr {
 	-khtml-user-select: auto;
 	-webkit-user-select: auto;
 	user-select: auto;
+}
+.big{
+	font-size: 75px;
 }

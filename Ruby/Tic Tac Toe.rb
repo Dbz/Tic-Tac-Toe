@@ -3,7 +3,7 @@ $num_board = (0..8).to_a
 
 def check_rows()
   3.times do |x|
-    if $game_board[x-1] == $game_board[x] && $game_board[x] == $game_board[x+1] && $game_board[x]
+    if $game_board[(x-1)*3] == $game_board[(x-1)*3+1] && $game_board[(x-1)*3] == $game_board[(x-1)*3+2] && $game_board[(x-1)*3]
       return true
     end
   end

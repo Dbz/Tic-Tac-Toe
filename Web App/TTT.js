@@ -5,7 +5,7 @@ var symbol = "x";
 
 function check_rows() {
 	var x = 0;
-	for(;x < 3; x++)
+	for(;x <= 9; x+=3)
 	    if(game_board[x] == game_board[x+1] && game_board[x] == game_board[x+2] && game_board[x])
     	  return true;
   	return false;
@@ -49,8 +49,8 @@ function reset() {
     player = 1;
     symbol = "x";
     $("caption").text("Player " + player);
-    var x = 1;
-    for(;x<10;x++)
+    var x = 0;
+    for(;x<9;x++)
         $("#" + x).text(" ");
 }
 
@@ -59,8 +59,8 @@ $(".cell").click(function() {
     var i = cell.attr('id');
     if (cell.text() !== " ")
         return
-    game_board[i-1] = symbol;
-    num_board[i-1] = " ";
+    game_board[i] = symbol;
+    num_board[i] = " ";
     cell.text(symbol);
     
     if(check_winner()) {
