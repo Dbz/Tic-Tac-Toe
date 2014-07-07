@@ -1,0 +1,30 @@
+table {
+	margin: auto;
+	margin-top: 5%;
+	text-align:center;
+}
+td {
+	font-size: 60px;
+	padding: 15px;
+	background-color: #FFD1FF;
+	height: 75px;
+	width: 75px;
+}
+caption {
+	cursor:default;
+	font-size: 75px;
+}
+* {
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+tr {
+	cursor:pointer;
+	-moz-user-select: auto;
+	-khtml-user-select: auto;
+	-webkit-user-select: auto;
+	user-select: auto;
+}

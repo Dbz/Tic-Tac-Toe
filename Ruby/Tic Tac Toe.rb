@@ -4,7 +4,7 @@ $num_board = (0..8).to_a
 def check_rows()
   3.times do |x|
     if $game_board[x-1] == $game_board[x] && $game_board[x] == $game_board[x+1] && $game_board[x]
-      return $game_board[x]
+      return true
     end
   end
   return nil
@@ -13,7 +13,7 @@ end
 def check_columns()
   3.times do |x|
     if $game_board[x-1] == $game_board[x+2] && $game_board[x+2] == $game_board[x+5] && $game_board[x-1]
-      return $game_board[x-1]
+      return true
     end
   end
   return nil  
@@ -21,9 +21,9 @@ end
 
 def check_diagonals()
   if $game_board[0] == $game_board[4] && $game_board[4] == $game_board[8] && $game_board[0]
-    return $game_board[0]
+    return true
   elsif $game_board[2] == $game_board[4] && $game_board[4] == $game_board[6] && $game_board[2]
-    return $game_board[2]
+    return true
   end
   return nil
 end
@@ -55,12 +55,12 @@ def print_board(b)
   puts get(b, 6) + "|" + get(b, 7) + "|" + get(b, 8)
 end
 
-def check_input(input)
-  if input > 8 || input < 0 || $game_board[input] != nil
+def check_input(i)
+  if i > 8 || i < 0 || $game_board[i] != nil
     puts "Sorry, that is an invalid input! Please try again"
-    input = check_input(gets.chomp.to_i)
+    i = check_input(gets.chomp.to_i)
   end
-  return input
+  return i
 end
 
 def game_over()
@@ -101,4 +101,3 @@ loop do
     exit
   end
 end
-puts "The game is a draw!"
