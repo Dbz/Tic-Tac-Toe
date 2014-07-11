@@ -1,7 +1,7 @@
 Tic-Tac-Toe
 ===========
 
-Two Player Tic Tac Toe was created to help me learn Ruby
+Tic Tac Toe was created to help me learn Ruby
 
 Ruby
 ----
