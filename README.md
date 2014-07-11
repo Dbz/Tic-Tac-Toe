@@ -13,14 +13,14 @@ The Ruby Files are played in terminal:
 
 The AI will always win or draw. It follows the move order found on wikipedia:
 
-1) Win
-2) Block Win
-3) Fork
-4) Block Fork
-5) Play Center
-6) Play Opposite Corner
-7) Play Empty Corner
-8) Play Empty Side
+1. Win
+2. Block Win
+3. Fork
+4. Block Fork
+5. Play Center
+6. Play Opposite Corner
+7. Play Empty Corner
+8. Play Empty Side
 
 Web App
 -------
