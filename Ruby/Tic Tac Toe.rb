@@ -2,6 +2,7 @@ $game_board = [nil,nil,nil,nil,nil,nil,nil,nil,nil]
 $num_board = (0..8).to_a
 
 def check_rows()
+  # Returns true if row is filled by player
   3.times do |x|
     if $game_board[(x-1)*3] == $game_board[(x-1)*3+1] && $game_board[(x-1)*3] == $game_board[(x-1)*3+2] && $game_board[(x-1)*3]
       return true
@@ -11,6 +12,7 @@ def check_rows()
 end
     
 def check_columns()
+  # Returns true if column is filled by player
   3.times do |x|
     if $game_board[x-1] == $game_board[x+2] && $game_board[x+2] == $game_board[x+5] && $game_board[x-1]
       return true
@@ -20,6 +22,7 @@ def check_columns()
 end
 
 def check_diagonals()
+  # Returns true if diagonal is filled by player
   if $game_board[0] == $game_board[4] && $game_board[4] == $game_board[8] && $game_board[0]
     return true
   elsif $game_board[2] == $game_board[4] && $game_board[4] == $game_board[6] && $game_board[2]
@@ -30,11 +33,11 @@ end
 
 def check_winner()
   if check_rows()
-    return check_rows()
+    return true
   elsif check_columns()
-    return check_columns()
+    return true
   elsif check_diagonals()
-    return check_diagonals()
+    return true
   end
   return nil
 end
@@ -47,23 +50,26 @@ def get(b, i)
   end
 end
 
-def print_board(b)
-  puts get(b, 0) + "|" + get(b, 1) + "|" + get(b, 2)
-  puts "-----"
-  puts get(b, 3) + "|" + get(b, 4) + "|" + get(b, 5)
-  puts "-----"
-  puts get(b, 6) + "|" + get(b, 7) + "|" + get(b, 8)
+def print_boards()
+  print get($num_board, 0) + "|" + get($num_board, 1) + "|" + get($num_board, 2)
+  puts "     " + get($game_board, 0) + "|" + get($game_board, 1) + "|" + get($game_board, 2)
+  puts "-----     -----"
+  print get($num_board, 3) + "|" + get($num_board, 4) + "|" + get($num_board, 5)
+  puts "     " + get($game_board, 3) + "|" + get($game_board, 4) + "|" + get($game_board, 5)
+  puts "-----     -----"
+  print get($num_board, 6) + "|" + get($num_board, 7) + "|" + get($num_board, 8)
+  puts "     " + get($game_board, 6) + "|" + get($game_board, 7) + "|" + get($game_board, 8)
 end
 
 def check_input(i)
-  if i > 8 || i < 0 || $game_board[i] != nil
+  if !(i =~ /^[012345678]{1}$/) || $game_board[i.to_i] != nil
     puts "Sorry, that is an invalid input! Please try again"
-    i = check_input(gets.chomp.to_i)
+    i = check_input(gets.chomp)
   end
-  return i
+  return i.to_i
 end
 
-def game_over()
+def game_draw()
   if $game_board.index(nil) == nil
     return true
   end
@@ -73,30 +79,29 @@ end
 puts "Hello! Welcome to Tic Tac Toe!"
 loop do
   puts "Player one, please type in the number of the spot that you would like to fill"
-  print_board($num_board)
-  input = check_input(gets.chomp.to_i)
+  print_boards()
+  input = check_input(gets.chomp)
   $game_board[input] = "X"
   $num_board[input] = " "
-  puts "Here is the current game board"
-  print_board($game_board)
   
   if check_winner()
+    print_boards()
     puts "Congratuations Player One! You Just Won!!!!"
     exit
-  elsif game_over()
+  elsif game_draw()
     puts "The game is a draw!!!"
     exit
   end
   
   puts "Player Two, please type in the number of the spot that you would like to fill"
-  print_board($num_board)
-  input = check_input(gets.chomp.to_i)
+  print_boards()
+  
+  input = check_input(gets.chomp)
   $game_board[input] = "O"
   $num_board[input] = " "
-  puts "Here is the current game board"
-  print_board($game_board)
   
   if check_winner()
+    print_boards()
     puts "Congratuations Player Two! You Just Won!!!!"
     exit
   end
