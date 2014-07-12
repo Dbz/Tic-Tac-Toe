@@ -1,5 +1,5 @@
 $game_board = [nil,nil,nil,nil,nil,nil,nil,nil,nil]
-$num_board = (0..8).to_a
+$num_board = (0..8).to_a # Shows available spots to players
 
 def check_rows()
   # Returns true if row is filled by player
@@ -62,7 +62,10 @@ def print_boards()
 end
 
 def check_input(i)
-  if !(i =~ /^[012345678]{1}$/) || $game_board[i.to_i] != nil
+  #Checks input and exits program
+  if (i.downcase() == "exit")
+    exit
+  elsif !(i =~ /^[012345678]{1}$/) || $game_board[i.to_i] != nil
     puts "Sorry, that is an invalid input! Please try again"
     i = check_input(gets.chomp)
   end

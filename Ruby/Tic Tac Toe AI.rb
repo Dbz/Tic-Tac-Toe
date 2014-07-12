@@ -1,15 +1,10 @@
 $game_board = [nil,nil,nil,nil,nil,nil,nil,nil,nil]
-$num_board = (0..8).to_a
+$num_board = (0..8).to_a # Shows available spots to player
 $player_symbol = "X"
 $computer_symbol = "O"
 $player_turn = true # true if player's turn
 
-def reset()
-  #Resets variables and switches player/computer symbols
-  $game_board = [nil,nil,nil,nil,nil,nil,nil,nil,nil]
-  $num_board = (0..8).to_a
-  $player_symbol, $computer_symbol = $computer_symbol, $player_symbol
-end
+############### Player functions
 
 def check_rows()
   # Returns true if row is filled by player
@@ -52,6 +47,22 @@ def check_winner()
   return nil
 end
 
+def game_draw()
+  if $game_board.index(nil) == nil
+    return true
+  end
+  return false
+end
+
+#################### Game functions
+
+def reset()
+  #Resets variables and switches player/computer symbols
+  $game_board = [nil,nil,nil,nil,nil,nil,nil,nil,nil]
+  $num_board = (0..8).to_a
+  $player_symbol, $computer_symbol = $computer_symbol, $player_symbol
+end
+
 def get(b, i)
   # Safely grabs information from a board for print_boards()
   if b[i] == nil
@@ -73,21 +84,17 @@ def print_boards()
 end
 
 def check_input(i)
-  if !(i =~ /^[012345678]{1}$/) || $game_board[i.to_i] != nil
+  #Checks input and exits program
+  if (i.downcase() == "exit")
+    exit
+  elsif !(i =~ /^[012345678]{1}$/) || $game_board[i.to_i] != nil
     puts "Sorry, that is an invalid input! Please try again"
     i = check_input(gets.chomp)
   end
   return i.to_i
 end
 
-def game_draw()
-  if $game_board.index(nil) == nil
-    return true
-  end
-  return false
-end
-
-# AI functions
+##################### AI functions
 
 def ai_check_rows(p)
   # Checks for two pieces & empy space (any order) with a player
@@ -135,7 +142,7 @@ def attempt_win()
     $game_board[ai_check_columns($computer_symbol)[0].to_i] = $computer_symbol
     return true
   elsif ai_check_diagonals($computer_symbol).count() > 0
-    $game_board[ai_check_columns($computer_symbol)[0].to_i] = $computer_symbol
+    $game_board[ai_check_diagonals($computer_symbol)[0].to_i] = $computer_symbol
     return true
   end
   false
@@ -250,18 +257,18 @@ def play_opening()
     return 3
   end
   
-  game_board.each_index do |x|
+  $game_board.each_index do |x|
     if $game_board[x] == " "
       $game_board[x] = $computer_symbol
       $num_board[x] = " "
       return 4
     end
   end
-    
 end
 
+####################### Program Logic
 
-puts "Hello! Welcome to Tic Tac Toe!"
+puts "Hello! Welcome to Tic Tac Toe! Anytime you'd like, you can type exit to quit the program."
 
 loop do
   if $player_turn
