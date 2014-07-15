@@ -54,46 +54,6 @@ def game_draw()
   return false
 end
 
-#################### Game functions
-
-def reset()
-  #Resets variables and switches player/computer symbols
-  $game_board = [nil,nil,nil,nil,nil,nil,nil,nil,nil]
-  $num_board = (0..8).to_a
-  $player_symbol, $computer_symbol = $computer_symbol, $player_symbol
-end
-
-def get(b, i)
-  # Safely grabs information from a board for print_boards()
-  if b[i] == nil
-    return " "
-  else
-    return b[i].to_s
-  end
-end
-
-def print_boards()
-  print get($num_board, 0) + "|" + get($num_board, 1) + "|" + get($num_board, 2)
-  puts "     " + get($game_board, 0) + "|" + get($game_board, 1) + "|" + get($game_board, 2)
-  puts "-----     -----"
-  print get($num_board, 3) + "|" + get($num_board, 4) + "|" + get($num_board, 5)
-  puts "     " + get($game_board, 3) + "|" + get($game_board, 4) + "|" + get($game_board, 5)
-  puts "-----     -----"
-  print get($num_board, 6) + "|" + get($num_board, 7) + "|" + get($num_board, 8)
-  puts "     " + get($game_board, 6) + "|" + get($game_board, 7) + "|" + get($game_board, 8)
-end
-
-def check_input(i)
-  #Checks input and exits program
-  if (i.downcase() == "exit")
-    exit
-  elsif !(i =~ /^[012345678]{1}$/) || $game_board[i.to_i] != nil
-    puts "Sorry, that is an invalid input! Please try again"
-    i = check_input(gets.chomp)
-  end
-  return i.to_i
-end
-
 ##################### AI functions
 
 def ai_check_rows(p)
@@ -226,7 +186,7 @@ def opposite_corner(c)
   return 0 if c == 8
 end
 
-def play_opening()
+def play_else()
   # 1 Play center
   # 2 Opposite corner if the opponent is in the corner
   # 3 Play empty corner
@@ -258,7 +218,7 @@ def play_opening()
   end
   
   $game_board.each_index do |x|
-    if $game_board[x] == " "
+    if $game_board[x] == nil
       $game_board[x] = $computer_symbol
       $num_board[x] = " "
       return 4
@@ -266,43 +226,94 @@ def play_opening()
   end
 end
 
+#################### Game functions
+
+def reset()
+  #Resets variables and switches player/computer symbols
+  $game_board = [nil,nil,nil,nil,nil,nil,nil,nil,nil]
+  $num_board = (0..8).to_a
+  $player_symbol, $computer_symbol = $computer_symbol, $player_symbol
+end
+
+def get(b, i)
+  # Safely grabs information from a board for print_boards()
+  if b[i] == nil
+    return " "
+  else
+    return b[i].to_s
+  end
+end
+
+def print_boards()
+  print get($num_board, 0) + "|" + get($num_board, 1) + "|" + get($num_board, 2)
+  puts "     " + get($game_board, 0) + "|" + get($game_board, 1) + "|" + get($game_board, 2)
+  puts "-----     -----"
+  print get($num_board, 3) + "|" + get($num_board, 4) + "|" + get($num_board, 5)
+  puts "     " + get($game_board, 3) + "|" + get($game_board, 4) + "|" + get($game_board, 5)
+  puts "-----     -----"
+  print get($num_board, 6) + "|" + get($num_board, 7) + "|" + get($num_board, 8)
+  puts "     " + get($game_board, 6) + "|" + get($game_board, 7) + "|" + get($game_board, 8)
+end
+
+def check_input(i)
+  #Checks input and exits program
+  if (i.downcase() == "exit")
+    exit
+  elsif !(i =~ /^[012345678]{1}$/) || $game_board[i.to_i] != nil
+    puts "Sorry, that is an invalid input! Please try again"
+    i = check_input(gets.chomp)
+  end
+  return i.to_i
+end
+
+
 ####################### Program Logic
 
-puts "Hello! Welcome to Tic Tac Toe! Anytime you'd like, you can type exit to quit the program."
 
+$computer_started = false
 loop do
+  if $computer_started
+    puts "Hello! Welcome to Tic Tac Toe! Anytime you'd like, you can type exit to quit the program."
+    $computer_started = false
+    $player_turn = true
+  end
   if $player_turn
     puts "Human, please type in the number of the spot that you would like to fill"
     print_boards()
     input = check_input(gets.chomp)
     $game_board[input] = $player_symbol
     $num_board[input] = " "
-    $player_turn = !$player_turn
+    $player_turn = false
     
     if check_winner() # Should never be true
       puts "Congratuations Human! You Just Won!!!!"
       exit
     elsif game_draw()
       puts "The game is a draw!!!"
+      print_boards()
       reset()
+      $computer_started = false
       puts "Let's play again!"
     end
   end
   if !$player_turn
-    if game_draw()
-        puts "The game is a draw!!!"
-        reset()
-        puts "Let's play again!"
-    elsif attempt_win()
+    if attempt_win()
       puts "Sorry Sir, but you've lost"
       print_boards()
       exit
-     elsif attempt_block()
-     elsif attempt_fork()
-     elsif block_fork()
-     else
-       play_opening()
+    elsif attempt_block()
+    elsif attempt_fork()
+    elsif block_fork()
+    else
+      play_else()
     end
-    $player_turn = !$player_turn
+    if game_draw()
+      puts "The game is a draw!!!"
+      print_boards()
+      reset()
+      puts "Let's play again!"
+      $computer_started = true
+    end
+    $player_turn = true
   end
 end
