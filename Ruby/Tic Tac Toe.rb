@@ -1,14 +1,14 @@
-$game_board = [nil,nil,nil,nil,nil,nil,nil,nil,nil]
+$game_board = Array.new(9, nil)
 $num_board = (0..8).to_a # Shows available spots to players
 
 def check_rows()
   # Returns true if row is filled by player
   3.times do |x|
-    if $game_board[(x-1)*3] == $game_board[(x-1)*3+1] && $game_board[(x-1)*3] == $game_board[(x-1)*3+2] && $game_board[(x-1)*3]
+    if $game_board[x*3] == $game_board[x*3+1] && $game_board[x*3] == $game_board[x*3+2] && $game_board[x*3]
       return true
     end
   end
-  return nil
+  false
 end
     
 def check_columns()
@@ -18,7 +18,7 @@ def check_columns()
       return true
     end
   end
-  return nil  
+  false 
 end
 
 def check_diagonals()
@@ -28,7 +28,7 @@ def check_diagonals()
   elsif $game_board[2] == $game_board[4] && $game_board[4] == $game_board[6] && $game_board[2]
     return true
   end
-  return nil
+  false
 end
 
 def check_winner()
@@ -39,7 +39,7 @@ def check_winner()
   elsif check_diagonals()
     return true
   end
-  return nil
+  false
 end
 
 def get(b, i)
@@ -69,14 +69,14 @@ def check_input(i)
     puts "Sorry, that is an invalid input! Please try again"
     i = check_input(gets.chomp)
   end
-  return i.to_i
+  i.to_i
 end
 
 def game_draw()
   if $game_board.index(nil) == nil
     return true
   end
-  return false
+  false
 end
 
 puts "Hello! Welcome to Tic Tac Toe!"

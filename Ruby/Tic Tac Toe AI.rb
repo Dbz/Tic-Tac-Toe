@@ -1,19 +1,20 @@
-$game_board = [nil,nil,nil,nil,nil,nil,nil,nil,nil]
+$game_board = Array.new(9, nil)
 $num_board = (0..8).to_a # Shows available spots to player
 $player_symbol = "X"
 $computer_symbol = "O"
 $player_turn = true # true if player's turn
+$computer_started = false # true if computer moves first
 
 ############### Player functions
 
 def check_rows()
   # Returns true if row is filled by player
   3.times do |x|
-    if $game_board[(x-1)*3] == $game_board[(x-1)*3+1] && $game_board[(x-1)*3] == $game_board[(x-1)*3+2] && $game_board[(x-1)*3]
+    if $game_board[x*3] == $game_board[x*3+1] && $game_board[x*3] == $game_board[x*3+2] && $game_board[x*3]
       return true
     end
   end
-  return nil
+  false
 end
     
 def check_columns()
@@ -23,7 +24,7 @@ def check_columns()
       return true
     end
   end
-  return nil  
+  false
 end
 
 def check_diagonals()
@@ -33,7 +34,7 @@ def check_diagonals()
   elsif $game_board[2] == $game_board[4] && $game_board[4] == $game_board[6] && $game_board[2]
     return true
   end
-  return nil
+  false
 end
 
 def check_winner()
@@ -51,7 +52,7 @@ def game_draw()
   if $game_board.index(nil) == nil
     return true
   end
-  return false
+  false
 end
 
 ##################### AI functions
@@ -269,8 +270,6 @@ end
 
 ####################### Program Logic
 
-
-$computer_started = false
 loop do
   if $computer_started
     puts "Hello! Welcome to Tic Tac Toe! Anytime you'd like, you can type exit to quit the program."
