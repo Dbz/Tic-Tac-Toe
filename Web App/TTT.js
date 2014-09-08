@@ -4,16 +4,14 @@ var player = 1;
 var symbol = "x";
 
 function check_rows() {
-	var x = 0;
-	for(;x <= 9; x+=3)
+	for(var x = 0;x <= 9; x+=3)
 	    if(game_board[x] == game_board[x+1] && game_board[x] == game_board[x+2] && game_board[x])
     	  return true;
   	return false;
 }
     
 function check_columns() {
-	var x = 0;
-	for(;x < 3; x++)
+	for(var x = 0;x < 3; x++)
 	    if (game_board[x] == game_board[x+3] && game_board[x] == game_board[x+6] && game_board[x])
     	  return true;
 	return false;
@@ -49,8 +47,7 @@ function reset() {
     player = 1;
     symbol = "x";
     $("caption").text("Player " + player);
-    var x = 0;
-    for(;x<9;x++)
+    for(var x = 0;x<9;x++)
         $("#" + x).text(" ");
 }
 
